@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       return new NextResponse("Unauthorized Request", { status: 401 });
     }
 
-    if (isGroup && (!members || members.length < 2 || !name || !userId)) {
+    if (isGroup && (!members || members.length < 2 || !name)) {
       return new NextResponse("Invalid data - Bad Request", { status: 400 });
     }
 

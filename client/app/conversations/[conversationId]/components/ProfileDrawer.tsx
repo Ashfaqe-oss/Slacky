@@ -6,6 +6,8 @@ import { Fragment, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoClose, IoTrash } from "react-icons/io5";
 import Avatar from "@/app/components/Avatar";
+import Model from "@/app/components/Model";
+import ConfirmModel from "./ConfirmModel";
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -20,7 +22,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   onClose,
   data,
 }) => {
-  const [confirmOpen, setConfirmOpen] = useState(false);
+  // const [confirmOpen, setConfirmOpen] = useState(false);
   const otherUser = useOtherUser(data);
 
   console.log(otherUser);
@@ -44,8 +46,11 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     return isActive ? "Active" : "Offline";
   }, [data, isActive]);
 
+  const [confirmOpen, setConfirmOpen] = useState(false)
+
   return (
     <>
+      <ConfirmModel isOpen={confirmOpen} onClose={() => setConfirmOpen(false)}/>
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={onClose}>
           <Transition.Child
@@ -102,7 +107,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                               onClick={() => setConfirmOpen(true)}
                               className="flex flex-col gap-3 items-center cursor-pointer hover:opacity-75"
                             >
-                              <div className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
+                              <div  className="w-10 h-10 bg-neutral-100 rounded-full flex items-center justify-center">
                                 <IoTrash size={20} />
                               </div>
                               <div className="text-sm font-light text-neutral-600">
@@ -121,6 +126,30 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                   text-gray-500 
                                   sm:w-40 
                                   sm:flex-shrink-0
+                                "
+                                  >
+                                    Names
+                                  </dt>
+                                  <dd
+                                    className="
+                                  mt-1 
+                                  text-sm 
+                                  text-gray-900 
+                                  sm:col-span-2
+                                "
+                                  >
+                                    {data.users
+                                      .map((user) => user.name)
+                                      .join(", ")}
+                                  </dd>
+                                  <dt
+                                    className="
+                                  text-sm 
+                                  font-medium 
+                                  text-gray-500 
+                                  sm:w-40 
+                                  sm:flex-shrink-0
+                                  mt-4
                                 "
                                   >
                                     Emails

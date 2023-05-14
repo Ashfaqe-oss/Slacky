@@ -7,6 +7,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Avatar from "@/app/components/Avatar";
 import { format } from "date-fns";
+import ImageModel from "./ImageModel";
 
 interface MessageBoxProps {
   key: string;
@@ -59,15 +60,16 @@ const MessageBox: React.FC<MessageBoxProps> = ({ key, data, isLast }) => {
           </div>
         </div>
 
+        
         <div className={message}>
-          {/* <ImageModel src={data.image} isOpen={imageModelOpen} onClose={() => setImageModelOpen(false)} /> */}
+          <ImageModel src={data.image} isOpen={imageModelOpen} onClose={() => setImageModelOpen(false)} />
 
           {data.image ? (
             <Image
               alt="Image"
               height={220}
               width={250}
-            //   onClick={() => setImageModalOpen(true)}
+              onClick={() => setImageModelOpen(true)}
               src={data.image}
               className="
                 object-cover 

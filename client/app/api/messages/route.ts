@@ -71,3 +71,34 @@ export async function POST(request: Request) {
     return new NextResponse("Error", { status: 500 });
   }
 }
+
+
+interface IParams {
+  messageId?: string;
+}
+
+export async function DELETE(
+    request: Request,
+    {params} : {params: IParams}
+) {
+    try {
+        const {messageId} = params
+
+        // const currUser = await getCurrentUser()
+
+        // if(!currUser?.id) {
+        //     return new NextResponse('unauthorized request', {status: 401})
+        // }
+
+        const deletedConversation = await prisma.message.deleteMany({
+            where: {
+                id: messageId,
+                // senderId: currUser.id //tis is why we got current user
+            }
+        })
+
+        return NextResponse.json(deletedConversation)
+    } catch (err: any) {
+        return new NextResponse(err.message, { status: 500 });
+    }
+}
