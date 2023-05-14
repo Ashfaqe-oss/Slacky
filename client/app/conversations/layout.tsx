@@ -9,7 +9,7 @@ export default async function ConversationsLayout({
     children: React.ReactNode
 }) {
     const conversations = await getConversations()
-    console.log(conversations)
+    // console.log(conversations)
     const users = await getUsers()
 
     return (

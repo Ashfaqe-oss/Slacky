@@ -21,7 +21,7 @@ const ConversationList: React.FC<conversationListProps> = ({
   const router = useRouter();
   const session = useSession();
 
-  console.log(initialItems)
+  // console.log(initialItems)
   const {conversationId, isOpen} = useConversation()
 
   return (
