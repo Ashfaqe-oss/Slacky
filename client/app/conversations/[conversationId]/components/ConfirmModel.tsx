@@ -38,7 +38,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   }, [router, conversationId, onClose])
 
   return (
-    <Model isOpen={isOpen} onClose={onClose}>
+    <Model isOpen={isOpen!} onClose={onClose}>
       <div className="sm:flex sm:items-start">
         <div 
           className="
