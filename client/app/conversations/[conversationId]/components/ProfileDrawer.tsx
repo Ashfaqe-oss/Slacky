@@ -8,6 +8,7 @@ import { IoClose, IoTrash } from "react-icons/io5";
 import Avatar from "@/app/components/Avatar";
 import Model from "@/app/components/Model";
 import ConfirmModel from "./ConfirmModel";
+import useActiveList from "@/app/hooks/useActiveList";
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -25,19 +26,18 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   // const [confirmOpen, setConfirmOpen] = useState(false);
   const otherUser = useOtherUser(data);
 
-  console.log(otherUser);
+  // console.log(otherUser);
   const joinedDate = useMemo(() => {
-    return format(new Date(otherUser?.createdAt), "PP");
+    return format(new Date(otherUser?.createdAt!), "PP");
   }, [otherUser.createdAt]);
 
   const title = useMemo(() => {
     return data.name || otherUser.name;
   }, [data.name, otherUser.name]);
 
-  //   const { members } = useActiveList();
-  //   const isActive = members.indexOf(otherUser?.email!) !== -1;
+    const { members } = useActiveList();
+    const isActive = members.indexOf(otherUser?.email!) !== -1;
 
-  const isActive = true;
   const statusText = useMemo(() => {
     if (data.isGroup) {
       return `${data.users.length} members`;

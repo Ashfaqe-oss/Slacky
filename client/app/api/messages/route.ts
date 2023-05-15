@@ -1,104 +1,87 @@
 import { NextResponse } from "next/server";
 
 import getCurrentUser from "@/app/actions/getCurrentUser";
-// import { pusherServer } from '@/app/libs/pusher'
+import { pusherServer } from '@/app/libs/pusher'
 import prisma from "@/app/libs/prismadb";
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request,
+) {
   try {
     const currentUser = await getCurrentUser();
     const body = await request.json();
-    const { message, image, conversationId } = body;
+    const {
+      message,
+      image,
+      conversationId
+    } = body;
 
     if (!currentUser?.id || !currentUser?.email) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const newMesssage = await prisma.message.create({
+    console.log("hi" , currentUser.id)
+    const newMessage = await prisma.message.create({
+      include: {
+        seen: true,
+        sender: true
+      },
       data: {
         body: message,
         image: image,
         conversation: {
-          connect: {
-            id: conversationId, //the unique conversation that we are talking about
-          },
+          connect: { id: conversationId }
         },
         sender: {
-          connect: {
-            id: currentUser.id, //who sent it
-          },
+          connect: { id: currentUser.id }
         },
         seen: {
           connect: {
-            id: currentUser.id, //who has seen it already, the one who sentt it
-          },
+            id: currentUser.id
+          }
         },
-      },
-      include: {
-        seen: true,
-        sender: true,
-      },
+      }
     });
 
-    //to be used with pusher
+    
     const updatedConversation = await prisma.conversation.update({
       where: {
-        id: conversationId,
+        id: conversationId
       },
-
       data: {
         lastMessageAt: new Date(),
         messages: {
           connect: {
-            id: newMesssage.id,
-          },
-        },
+            id: newMessage.id
+          }
+        }
       },
       include: {
         users: true,
         messages: {
-            include: {
-                seen: true
-            }
+          include: {
+            seen: true
+          }
         }
       }
-      
     });
 
-    return NextResponse.json(newMesssage)
-  } catch (error: any) {
-    console.log(error, "ERROR_MESSAGES");
-    return new NextResponse("Error", { status: 500 });
+    await pusherServer.trigger(conversationId, 'messages:new', newMessage); //ID, key to trigger update, new mesg
+    //adds new msg in real time
+
+    const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
+
+    //have to update for all the users right?
+    updatedConversation.users.map((user) => {
+      pusherServer.trigger(user.email!, 'conversation:update', {
+        id: conversationId,
+        messages: [lastMessage]
+      });
+    });
+
+    return NextResponse.json(newMessage)
+  } catch (error) {
+    console.log(error, 'ERROR_MESSAGES')
+    return new NextResponse('Error', { status: 500 });
   }
-}
-
-
-interface IParams {
-  messageId?: string;
-}
-
-export async function DELETE(
-    request: Request,
-    {params} : {params: IParams}
-) {
-    try {
-        const {messageId} = params
-
-        // const currUser = await getCurrentUser()
-
-        // if(!currUser?.id) {
-        //     return new NextResponse('unauthorized request', {status: 401})
-        // }
-
-        const deletedConversation = await prisma.message.deleteMany({
-            where: {
-                id: messageId,
-                // senderId: currUser.id //tis is why we got current user
-            }
-        })
-
-        return NextResponse.json(deletedConversation)
-    } catch (err: any) {
-        return new NextResponse(err.message, { status: 500 });
-    }
 }

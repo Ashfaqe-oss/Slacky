@@ -26,6 +26,7 @@ const Form = () => {
       ...data,
       conversationId: conversationId,
     });
+    // console.log(data)
   };
 
   const handleUpload = (result: any) => {
