@@ -20,7 +20,7 @@ interface conversationListProps {
 const ConversationList: React.FC<conversationListProps> = ({
   initialItems,
   title,
-  users
+  users,
 }) => {
   const [items, setItems] = useState(initialItems);
   const router = useRouter();
@@ -36,24 +36,26 @@ const ConversationList: React.FC<conversationListProps> = ({
   }, [session.data?.user?.email]);
 
   useEffect(() => {
-    if(!pusherKey) {
+    if (!pusherKey) {
       return;
     }
 
-    pusherClient.subscribe(pusherKey)
+    pusherClient.subscribe(pusherKey);
 
     const updateHandler = (conversation: FullConversationType) => {
-      setItems((current) => current.map((currentConversation) => {
-        if(currentConversation.id === conversation.id) {
-          return {
-            ...currentConversation,
-            messages: conversation.messages
+      setItems((current) =>
+        current.map((currentConversation) => {
+          if (currentConversation.id === conversation.id) {
+            return {
+              ...currentConversation,
+              messages: conversation.messages,
+            };
           }
-        }
 
-        return currentConversation
-      }))
-    }
+          return currentConversation;
+        })
+      );
+    };
 
     const newHandler = (conversation: FullConversationType) => {
       setItems((current) => {
@@ -61,21 +63,21 @@ const ConversationList: React.FC<conversationListProps> = ({
           return current;
         }
 
-        return [conversation, ...current]
+        return [conversation, ...current];
       });
-    }
+    };
 
     const removeHandler = (conversation: FullConversationType) => {
       setItems((current) => {
-        console.log(current)
-        return [...current.filter((convo) => convo.id !== conversation.id)]
+        console.log(current);
+        return [...current.filter((convo) => convo.id !== conversation.id)];
       });
-    }
+    };
 
-    pusherClient.bind('conversation:update', updateHandler);
-    pusherClient.bind('conversation:new', newHandler);
-    pusherClient.bind('conversation:remove', removeHandler);
-  }, [pusherKey, router])
+    pusherClient.bind("conversation:update", updateHandler);
+    pusherClient.bind("conversation:new", newHandler);
+    pusherClient.bind("conversation:remove", removeHandler);
+  }, [pusherKey, router]);
 
   return (
     <>
@@ -87,16 +89,16 @@ const ConversationList: React.FC<conversationListProps> = ({
       <aside
         className={clsx(
           `
-    fixed 
-    inset-y-0 
-    pb-20
-    lg:pb-0
-    lg:left-20 
-    lg:w-80 
-    lg:block
-    overflow-y-auto 
-    border-r 
-    border-gray-200 
+          fixed 
+          inset-y-0 
+          pb-20
+          lg:pb-0
+          lg:left-20 
+          lg:w-80 
+          lg:block
+          overflow-y-auto 
+          border-r 
+          border-gray-200 
   `,
           isOpen ? "hidden" : "block w-full left-0"
         )}
