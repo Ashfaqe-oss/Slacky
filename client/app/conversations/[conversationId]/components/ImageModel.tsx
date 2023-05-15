@@ -19,7 +19,7 @@ const ImageModel: React.FC<ImageModelProps> = ({
   }
 
   return (
-    <Model isOpen={isOpen} onClose={onClose}>
+    <Model isOpen={isOpen!} onClose={onClose}>
       <div className="w-80 h-80">
         <Image 
           className="object-cover" 
