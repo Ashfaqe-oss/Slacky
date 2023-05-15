@@ -31,7 +31,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
 
       setMessages((current) => {
         if (find(current, { id: message.id })) {
-          console.log(current)
+          // console.log(current)
           return current;
           
         }
@@ -46,7 +46,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
       setMessages((current) =>
         current.map((currentMessage) => {
           if (currentMessage.id === newMessage.id) {
-            console.log(newMessage)
+            // console.log(newMessage)
             return newMessage;
           }
 
