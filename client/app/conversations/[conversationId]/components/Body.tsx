@@ -28,12 +28,12 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
 
     const messageHandler = (message: FullMessageType) => {
       axios.post(`/api/conversations/${conversationId}/seen`);
+      console.log('sent seen')
 
       setMessages((current) => {
         if (find(current, { id: message.id })) {
           // console.log(current)
           return current;
-          
         }
 
         return [...current, message];
@@ -55,16 +55,30 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
       );
     };
 
+    const deleteMessageHandler = (newMessage: string) => {
+      //remove the deleted message from the list
+      setMessages((current) => {
+        // console.log(current);
+        return [...current.filter((msg) => msg.id !== newMessage)];
+      });
+      console.log(messages)
+    };
+    // console.log(messages)
+
+
     //bind client to expect message //messagehandler is to update 
     pusherClient.bind("messages:new", messageHandler);
     pusherClient.bind("message:update", updateMessageHandler);
+    pusherClient.bind('messages:delete', deleteMessageHandler);
 
     return () => {
       pusherClient.unsubscribe(conversationId);
       pusherClient.unbind("messages:new", messageHandler);
       pusherClient.unbind("message:update", updateMessageHandler);
+      pusherClient.unbind('messages:delete', deleteMessageHandler);
+
     };
-  }, [conversationId]);
+  }, [conversationId, messages]);
 
   return (
     <div className="flex-1 h-80 overflow-y-auto">
