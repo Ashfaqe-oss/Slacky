@@ -34,39 +34,20 @@ const GroupChatModel: React.FC<GroupChatModalProps> = ({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
- //   const {
-  //     register,
-  //     handleSubmit,
-  //     setValue,
-  //     watch,
-  //     formState: { errors },
-  //   } = useForm<FieldValues>({
-  //     //type to accept
-  //     defaultValues: {
-  //       name: "",
-  //       members: [],
-  //     },
-  //   });
-
-  //   console.log(notes[0]);
+ 
   const [selectedNote, setSelectedNote] = useState();
-
-  console.log(selectedNote);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-
 
     const text = htmlToText(selectedNote!, {
       wordwrap: 130,
     });
 
-    console.log(text)
     axios
       .post("/api/messages", {
         message: text,
-        conversationId: "64623c303b57ce3af034a3d9",
+        conversationId: conversationId,
       })
       .then((response) => {
         toast.success("Note shared successfully !");
@@ -108,7 +89,9 @@ const GroupChatModel: React.FC<GroupChatModalProps> = ({
                 }))}
                 noMulti={false}
                 onChange={(note) => setSelectedNote(note.content)}
-                value={selectedNote}
+                // value={notes.filter((note) => {
+                //     note.content === selectedNote
+                // })}
               />
             </div>
           </div>

@@ -45,7 +45,6 @@ const Form: React.FC<FormProps> = ({ notes = [] }) => {
     });
   };
 
-  console.log(conversationId)
 
   return (
     <>

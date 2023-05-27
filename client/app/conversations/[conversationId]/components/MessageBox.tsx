@@ -51,10 +51,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  
-
   const [confirmOpen, setConfirmOpen] = useState(false)
-
 
   return (
     <div className={container}>
