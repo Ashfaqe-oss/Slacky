@@ -27,6 +27,7 @@ model User {
   seenMessages   Message[] @relation("Seen", fields: [seenMessageids], references: [id])
   accounts       Account[]
   messages       Message[]
+  notes          Note[]
 }
 
 //optional values cuz of social login
@@ -78,4 +79,14 @@ model Message {
 
   senderId String @db.ObjectId
   sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+model Note {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  image     String?
+  createdAt DateTime @default(now())
+  ownerId   String   @db.ObjectId
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 }

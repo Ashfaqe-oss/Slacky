@@ -1,6 +1,11 @@
 import clsx from "clsx";
 import Link from "next/link";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 interface MobileItemProps {
   label: string;
   icon: any;
@@ -10,6 +15,7 @@ interface MobileItemProps {
 }
 
 const MobileItem: React.FC<MobileItemProps> = ({
+  label,
   href,
   icon: Icon,
   active,
@@ -19,13 +25,15 @@ const MobileItem: React.FC<MobileItemProps> = ({
     if (onClick) return onClick();
   };
 
-  
   return (
-    <Link
-      onClick={handleClick}
-      href={href}
-      className={clsx(
-        `
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link
+            onClick={handleClick}
+            href={href}
+            className={clsx(
+              `
           group 
           flex 
           gap-x-3 
@@ -39,11 +47,17 @@ const MobileItem: React.FC<MobileItemProps> = ({
           hover:text-black 
           hover:bg-gray-100
         `,
-        active && "bg-gray-100 text-black"
-      )}
-    >
-      <Icon className="h-6 w-6" />
-    </Link>
+              active && "bg-gray-100 text-black"
+            )}
+          >
+            <Icon className="h-6 w-6" />
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p className="text-gray-600">{label}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

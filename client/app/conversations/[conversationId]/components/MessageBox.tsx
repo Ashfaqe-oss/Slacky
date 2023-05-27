@@ -73,7 +73,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
               <DeleteModel msg={msg} isOpen={confirmOpen} onClose={() => setConfirmOpen(false)}/>
               <button
                 disabled={isLoading}
-                className="mt-2 mr-[6px] hover:bg-red-500 transition rounded-full z-10"
+                className="mt-2 max-h-4 mr-[6px] hover:bg-red-500 transition rounded-full z-10"
                 onClick={() => setConfirmOpen(true)}              >
                 🗑️
               </button>

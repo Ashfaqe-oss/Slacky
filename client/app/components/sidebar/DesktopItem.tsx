@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import clsx from "clsx";
 import Link from "next/link";
 
 interface DesktopItemProps {
@@ -8,29 +8,40 @@ interface DesktopItemProps {
   onClick?: () => void;
   active?: boolean;
 }
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-const DesktopItem: React.FC<DesktopItemProps> = ({ 
-  label, 
-  href, 
-  icon: Icon, 
+const DesktopItem: React.FC<DesktopItemProps> = ({
+  label,
+  href,
+  icon: Icon,
   active,
-  onClick
+  onClick,
 }) => {
+
   const handleClick = () => {
     if (onClick) {
       return onClick();
     }
   };
 
-  return ( 
-    <li onClick={handleClick} key={label}>
-      <Link
-        href={href}
-        className={clsx(`
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild >
+          <li onClick={handleClick} key={label} className="rounded-md">
+            <Link
+              href={href}
+              className={clsx(
+                `
             group 
             flex 
             gap-x-3 
-            rounded-md 
+            rounded-xl
             p-3 
             text-sm 
             leading-6 
@@ -40,14 +51,20 @@ const DesktopItem: React.FC<DesktopItemProps> = ({
             hover:bg-gray-100
             m-2
           `,
-            active && 'bg-gray-100 text-black'
-          )}
-      >
-        <Icon className="h-7 w-7 shrink-0" aria-hidden="true" />
-        <span className="sr-only">{label}</span>
-      </Link>
-    </li>
-   );
-}
- 
+                active && "bg-gray-100 text-black"
+              )}
+            >
+              <Icon className="h-7 w-7 shrink-0" aria-hidden="true" />
+              <span className="sr-only">{label}</span>
+            </Link>
+          </li>
+        </TooltipTrigger>
+        <TooltipContent side="right">
+          <p className="text-gray-600">{label}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
 export default DesktopItem;

@@ -56,7 +56,7 @@ interface MobileFooterProps {
         ))}
         <div
             onClick={() => setIsSettingsOpen(true)}
-            className="cursor-pointer mx-2 pt-2 pr-4 hover:opacity-75 transition"
+            className="cursor-pointer mx-2 pt-2 pr-2 hover:opacity-75 transition"
           >
             <Avatar user={currentUser} />
           </div>
