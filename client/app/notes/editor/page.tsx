@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./components/Header";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import NoteBox from "./components/NoteBox";
 import getNotes from "@/app/actions/getNotes";
 // import { Note } from "@prisma/client";
+import { pusherClient } from "@/app/libs/pusher";
 
 const editorHome = async () => {
   const currentUser = await getCurrentUser();
@@ -12,7 +13,7 @@ const editorHome = async () => {
 
   const notes = await getNotes(currentUser?.id!);
 
-  console.log(notes)
+  // console.log(notes)
 
   return (
     <div>

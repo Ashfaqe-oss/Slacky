@@ -89,7 +89,7 @@ const Content = ({ note, onClose, existing }: Props) => {
     if (editor?.isEmpty) setContentError("This field is required.");
     if (title === "" || editor?.isEmpty) return;
 
-    console.log(content);
+    // console.log(content);
 
     const response = await fetch("/api/notes", {
       method: "POST",

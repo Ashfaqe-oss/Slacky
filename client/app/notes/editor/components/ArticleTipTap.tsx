@@ -63,7 +63,7 @@ const Article = ({
               value={role}
             />
             <button type="button" onClick={postAiContent}>
-              <RocketLaunchIcon className="h-8 w-8 text-accent-orange hover:text-wh-300" />
+              <RocketLaunchIcon className="h-8 w-8 text-sky-500 hover:text-wh-300" />
             </button>
           </div>
         </div>

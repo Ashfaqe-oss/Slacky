@@ -76,7 +76,7 @@ const OpenEdit = ({
             <button onClick={handleEnableEdit}>
               <PencilSquareIcon className="h-6 w-6 text-accent-red m-2 cursor-pointer" />
             </button>
-            {note && <BsTrash onClick={handleDelete} className="h-6 w-6 text-accent-red m-2 cursor-pointer" />}
+            {note && <BsTrash onClick={handleDelete} className=" h-6 w-6 text-accent-red m-2 cursor-pointer" />}
           </div>
         )}
       </div>
