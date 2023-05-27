@@ -4,6 +4,8 @@ import EmptyState from "@/app/components/EmptyState";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Form from "./components/Form";
+import getCurrentUser from "@/app/actions/getCurrentUser";
+import getNotes from "@/app/actions/getNotes";
 
 interface IdParams {
   conversationId: string;
@@ -12,8 +14,11 @@ interface IdParams {
 const conversationId = async ({ params }: { params: IdParams }) => {
   console.log(params);
 
+  const currentUser = await getCurrentUser();
+
   const conversation = await getConversationById(params.conversationId);
   const messages = await getMessages(params.conversationId);
+  const notes = await getNotes(currentUser?.id!);
 
   if (!conversation) {
     return (
@@ -30,7 +35,7 @@ const conversationId = async ({ params }: { params: IdParams }) => {
         {/* Conversation id is {params.conversationId} */}
         <Header conversation={conversation} />
         <Body initialMessages={messages} />
-        <Form />
+        <Form notes={notes} />
       </div>
     </div>
   );

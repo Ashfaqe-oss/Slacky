@@ -44,7 +44,8 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
   const message = clsx(
     "text-sm w-fit overflow-hidden",
     isOwn ? "bg-sky-500 text-white" : "bg-gray-100",
-    msg.image ? "rounded-md p-0" : "rounded-full py-2 px-3"
+    msg.image ? "rounded-md p-0" : "rounded-full py-2 px-3",
+    msg?.body?.length! > 65  && "rounded-2xl"
   );
 
   const [isLoading, setIsLoading] = useState(false);
@@ -73,7 +74,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
               <DeleteModel msg={msg} isOpen={confirmOpen} onClose={() => setConfirmOpen(false)}/>
               <button
                 disabled={isLoading}
-                className="mt-2 max-h-4 mr-[6px] hover:bg-red-500 transition rounded-full z-10"
+                className="mt-2 max-h-6 mr-[6px] hover:bg-red-500 transition rounded-full z-10"
                 onClick={() => setConfirmOpen(true)}              >
                 🗑️
               </button>
