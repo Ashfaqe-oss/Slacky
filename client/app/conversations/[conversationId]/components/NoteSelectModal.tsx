@@ -16,7 +16,7 @@ import Button from "@/app/components/Button";
 import Input from "@/app/components/inputs/input";
 import Select from "@/app/components/inputs/Select";
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import {htmlToText} from 'html-to-text'
+import { htmlToText } from "html-to-text";
 
 interface GroupChatModalProps {
   isOpen?: boolean;
@@ -34,7 +34,6 @@ const GroupChatModel: React.FC<GroupChatModalProps> = ({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
- 
   const [selectedNote, setSelectedNote] = useState();
 
   const handleSubmit = (e: FormEvent) => {
@@ -78,9 +77,19 @@ const GroupChatModel: React.FC<GroupChatModalProps> = ({
             <p className="mt-1 text-sm leading-6 text-gray-600">
               to share with your friends ..
             </p>
+            {notes.length === 0 && (
+              <>
+                <p className="mt-1 text-sm leading-6 text-red-500">
+                  You have No notes to share. Please create one first !
+                </p>
+                <p className="mt-1 text-sm leading-6 text-sky-500">
+                  Click on the notes icon to enter Notes Editor .
+                </p>
+              </>
+            )}
             <div className="mt-10 flex flex-col gap-y-8">
               <Select
-                disabled={isLoading}
+                disabled={isLoading || notes.length === 0}
                 label="Notes"
                 options={notes.map((note) => ({
                   value: note.id,
@@ -115,5 +124,3 @@ const GroupChatModel: React.FC<GroupChatModalProps> = ({
 };
 
 export default GroupChatModel;
-
-

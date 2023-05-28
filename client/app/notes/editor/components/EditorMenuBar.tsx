@@ -21,7 +21,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           }
           className={
             editor.isActive("heading", { level: 1 })
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -33,7 +33,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           }
           className={
             editor.isActive("heading", { level: 2 })
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -45,7 +45,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           }
           className={
             editor.isActive("heading", { level: 3 })
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black "
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black "
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -55,7 +55,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().setParagraph().run()}
           className={
             editor.isActive("paragraph")
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -65,7 +65,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().toggleBold().run()}
           className={
             editor.isActive("bold")
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -75,7 +75,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().toggleItalic().run()}
           className={
             editor.isActive("italic")
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -85,7 +85,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().toggleStrike().run()}
           className={
             editor.isActive("strike")
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -95,7 +95,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().toggleHighlight().run()}
           className={
             editor.isActive("highlight")
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -105,7 +105,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().setTextAlign("left").run()}
           className={
             editor.isActive({ textAlign: "left" })
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -115,7 +115,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().setTextAlign("center").run()}
           className={
             editor.isActive({ textAlign: "center" })
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -125,7 +125,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().setTextAlign("right").run()}
           className={
             editor.isActive({ textAlign: "right" })
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >
@@ -135,7 +135,7 @@ const EditorMenuBar = ({ editor }: Props) => {
           onClick={() => editor.chain().focus().setTextAlign("justify").run()}
           className={
             editor.isActive({ textAlign: "justify" })
-              ? "is-active is-active border-2 px-1 m-1 rounded-xl border-black"
+              ? "is-active bg-black text-white px-1 m-1 rounded-xl border-black"
               : "border px-1 m-1 rounded-xl border-black"
           }
         >

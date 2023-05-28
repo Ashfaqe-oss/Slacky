@@ -7,6 +7,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import axios from "axios";
 import toast from "react-hot-toast";
+import DeleteNoteModal from "./DeleteNoteModal";
 type Props = {
   isEditable: boolean;
   handleIsEditable: (isEditable: boolean) => void;
@@ -33,6 +34,7 @@ const OpenEdit = ({
   note,
 }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleEnableEdit = () => {
     handleIsEditable(!isEditable);
@@ -45,22 +47,7 @@ const OpenEdit = ({
     setTitle(tempTitle);
     editor?.commands.setContent(tempContent);
   };
-
-  const handleDelete = useCallback(() => {
-    setIsLoading(true);
-    axios
-      .delete(`/api/notes/${note?.id}`)
-      .then(() => {
-        toast.success(`Note deleted successfully`);
-      })
-      .catch((error: any) => {
-        toast.error("Something went wrong");
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [note?.id]);
+ 
 
   return (
     <div className="flex justify-between items-center">
@@ -76,7 +63,25 @@ const OpenEdit = ({
             <button onClick={handleEnableEdit}>
               <PencilSquareIcon className="h-6 w-6 text-accent-red m-2 cursor-pointer" />
             </button>
-            {note && <BsTrash onClick={handleDelete} className=" h-6 w-6 text-accent-red m-2 cursor-pointer" />}
+            {note && (
+              <>
+                <DeleteNoteModal
+                  note={note}
+                  isOpen={confirmOpen}
+                  onClose={() => setConfirmOpen(false)}
+                />
+                <button
+                  disabled={isLoading}
+                  // className="mt-2 max-h-6 mr-[6px] hover:bg-red-500 transition rounded-full z-10"
+                  onClick={() => setConfirmOpen(true)}
+                >
+                  <BsTrash
+                    // onClick={handleDelete}
+                    className=" h-6 w-6 text-accent-red m-2 cursor-pointer"
+                  />
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>
