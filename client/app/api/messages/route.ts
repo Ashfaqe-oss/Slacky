@@ -20,7 +20,7 @@ export async function POST(
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    console.log("hi" , currentUser.id)
+    // console.log("hi" , currentUser.id)
     const newMessage = await prisma.message.create({
       include: {
         seen: true,

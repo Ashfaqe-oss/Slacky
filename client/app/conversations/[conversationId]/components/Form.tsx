@@ -17,7 +17,7 @@ const Form: React.FC<FormProps> = ({ notes = [] }) => {
   const { conversationId } = useConversation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(notes)
+  // console.log(notes)
   const {
     register,
     handleSubmit,

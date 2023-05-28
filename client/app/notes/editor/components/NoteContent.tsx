@@ -9,7 +9,7 @@ import EditorMenuBar from "./EditorMenuBar";
 import ArticleTipTap from "./ArticleTipTap";
 import Button from "@/app/components/Button";
 import OpenEdit from "./OpenEdit";
-import {BsTrash} from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -84,36 +84,62 @@ const Content = ({ note, onClose, existing }: Props) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // validation checks
-    if (title === "") setTitleError("This field is required.");
-    if (editor?.isEmpty) setContentError("This field is required.");
-    if (title === "" || editor?.isEmpty) return;
+    if (note) {
+      if (title === "") setTitleError("This field is required.");
+      if (editor?.isEmpty) setContentError("This field is required.");
+      if (title === "" || editor?.isEmpty) return;
 
-    // console.log(content);
+      const response = await fetch(`/api/notes/${note.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+          ownerId: note.ownerId,
+        }),
+      });
+      const data = await response.json();
 
-    const response = await fetch("/api/notes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: title,
-        content: content,
-      }),
-    });
-    const data = await response.json()
+      console.log(data);
 
-    data && toast.success("Note created successfully");
+      if (data) {
+        toast.success(note.title + " updated successfully");
+      }
+    } else {
+      // validation checks
+      if (title === "") setTitleError("This field is required.");
+      if (editor?.isEmpty) setContentError("This field is required.");
+      if (title === "" || editor?.isEmpty) return;
 
-    handleIsEditable(false);
-    setTempTitle("");
-    setTempContent("");
+      // console.log(content);
 
-    setTitle(data.title);
-    setContent(data.content);
-    editor?.commands.setContent(data.content);
+      const response = await fetch("/api/notes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+        }),
+      });
+      const data = await response.json();
+
+      if (data) {
+        toast.success("Note created successfully");
+      }
+      
+      handleIsEditable(false);
+      setTempTitle("");
+      setTempContent("");
+
+      setTitle(data.title);
+      setContent(data.content);
+      editor?.commands.setContent(data.content);
+    }
   };
-
 
   return (
     <div className="prose w-full max-w-full mb-2">
@@ -134,9 +160,6 @@ const Content = ({ note, onClose, existing }: Props) => {
         editor={editor}
         note={note}
       />
-
-
-      
 
       <form onSubmit={handleSubmit}>
         {/* HEADER */}
@@ -182,7 +205,11 @@ const Content = ({ note, onClose, existing }: Props) => {
             >
               Cancel
             </Button>
-            {!note && <Button type="submit">Create</Button>}
+            {!note ? (
+              <Button type="submit">Create</Button>
+            ) : (
+              <Button type="submit">Update</Button>
+            )}
           </div>
         )}
       </form>

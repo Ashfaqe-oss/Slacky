@@ -61,7 +61,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
         // console.log(current);
         return [...current.filter((msg) => msg.id !== newMessage)];
       });
-      console.log(messages)
+      // console.log(messages)
     };
     // console.log(messages)
 
