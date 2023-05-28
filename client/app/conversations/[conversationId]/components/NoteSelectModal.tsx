@@ -74,12 +74,14 @@ const GroupChatModel: React.FC<GroupChatModalProps> = ({
             >
               Select one of your Notes
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              to share with your friends ..
-            </p>
+            {notes.length > 0 && (
+              <p className="mt-1 text-sm leading-6 text-gray-600">
+                to share with your friends ..
+              </p>
+            )}
             {notes.length === 0 && (
               <>
-                <p className="mt-1 text-sm leading-6 text-red-500">
+                <p className="mt-6 text-sm leading-6 text-red-500">
                   You have No notes to share. Please create one first !
                 </p>
                 <p className="mt-1 text-sm leading-6 text-sky-500">
